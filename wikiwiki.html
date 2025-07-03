@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>mysecretfielddiary</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #1C1143;
+      font-family: 'Ubuntu', sans-serif;
+      color: white;
+    }
+
+    .table-container {
+      position: relative;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      background-image: linear-gradient(to right, white 1px, transparent 1px);
+      background-size: 12.5% 100%;
+      background-repeat: repeat;
+    }
+
+    colgroup col:nth-child(1),
+    colgroup col:nth-child(2),
+    colgroup col:nth-child(3),
+    colgroup col:nth-child(4),
+    colgroup col:nth-child(n+5) {
+      width: 12.5%;
+    }
+
+    th, td {
+      font-size: 4rem;
+      font-weight:500;
+      text-align: left;
+      line-height: 0.9;
+      padding: 0rem;
+      border: none;
+      vertical-align: middle;
+    }
+
+    thead {
+      position: relative;
+    }
+
+    thead th {
+      padding: 0 0 0 0;
+    }
+
+    th {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    th:hover {
+      border-bottom: 2px solid #F8EC1E;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    tr:hover td {
+      border-bottom: 2px solid yellow;
+    }
+
+    /* Plus button in header row */
+    #addButtonInline {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      font-size: 3rem;
+      text-decoration: none;
+      color: white;
+      background: transparent;
+      width: 50px;
+      height: 50px;
+      border-radius: 0%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.3s;
+      font-weight: 500;
+    }
+
+    #addButtonInline:hover {
+      color: #F8EC1E;
+    }
+
+    @media (max-width: 768px) {
+      th, td {
+        font-size: 1.6rem;
+        padding: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="table-container">
+    <a href="index.html" id="addButtonInline" title="Open menu">＋</a>
+    <table>
+      <colgroup>
+        <col><col>
+        <col><col>
+        <col><col><col><col>
+      </colgroup>
+      <thead>
+        <tr>
+        </tr>
+      </thead>
+      <tbody id="jobTableBody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    let sortDirection = {
+      posted: true,
+      title: true,
+      company: true
+    };
+
+    const jobs = [
+    { posted: "About this site", title: "", company: "", link: "barbara@hufak.net" },
+{ posted: "Admission", title: "", company: "", link: "https://www.dieangewandte.at/jart/prj3/angewandte-2016/data/uploads/Institut/BA_TS_Application_Procedure_2025.pdf" },
+{ posted: "Bachelor's thesis", title: "", company: "", link: "" },
+{ posted: "base", title: "", company: "", link: "https://base.uni-ak.ac.at/" },
+{ posted: "Curriculum", title: "", company: "", link: "https://studien.homepage.uni-ak.ac.at/curricula/162_2023U_BA.pdf" },
+{ posted: "Field project", title: "", company: "", link: "index.html" },
+{ posted: "Instagram", title: "", company: "", link: "https://www.instagram.com/transformation_studies/" },
+{ posted: "JKU from A to Z", title: "", company: "", link: "https://www.jku.at/en/degree-programs/students/studies-from-a-z/" },
+{ posted: "JKU Moodle", title: "", company: "", link: "https://moodle.jku.at/" },
+{ posted: "JKU Zoom", title: "", company: "", link: "https://jku.zoom.us/" },
+{ posted: "kusss", title: "", company: "", link: "https://www.kusss.jku.at/kusss/index.action" },
+{ posted: "Manifesto, The", title: "", company: "", link: "https://www.jku.at/fileadmin/marketing/Presse_Savoy/News/2019/November/Ordner3/JKU-Manifest.pdf" },
+{ posted: "ÖH Angewandte, aka hufak", title: "", company: "", link: "https://hufak.net/" },
+{ posted: "ÖH JKU", title: "", company: "", link: "https://oeh.jku.at/" },
+{ posted: "School @Angewandte, The", title: "", company: "", link: "https://www.dieangewandte.at/art_science_school_transformation" },
+{ posted: "School @JKU, The", title: "", company: "", link: "https://www.jku.at/art-x-science-school-for-transformation/" },
+{ posted: "Studienhandbuch", title: "", company: "", link: "https://studienhandbuch.jku.at/curr/1096" },
+{ posted: "Studying abroad via Angewandte", title: "", company: "", link: "https://www.dieangewandte.at/en/studies/student_exchange/partner_universities" },
+{ posted: "Studying abroad via JKU", title: "", company: "", link: "https://jku.adv-pub.moveon4.de/home-page-2351/" },
+{ posted: "StV @Angewandte", title: "", company: "", link: "https://hufak.net/" },
+{ posted: "StV @JKU", title: "", company: "", link: "https://oeh.jku.at/studium/sozial-und-wirtschaftswissenschaften/sozialwirtschaft" },
+{ posted: "Vimeo", title: "", company: "", link: "" }
+];
+
+
+    const tableBody = document.getElementById("jobTableBody");
+
+    function renderTable(data) {
+      tableBody.innerHTML = '';
+      data.forEach(job => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td colspan="4"><a href="${job.link}" target="_blank">${job.posted}</a></td>
+          <td colspan="2"><a href="${job.link}" target="_blank">${job.title}</a></td>
+          <td colspan="2"><a href="${job.link}" target="_blank">${job.company}</a></td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function sortTable(key) {
+      const direction = sortDirection[key] ? 1 : -1;
+      const sortedJobs = [...jobs].sort((a, b) => {
+        const valA = a[key].toLowerCase();
+        const valB = b[key].toLowerCase();
+        if (valA < valB) return -1 * direction;
+        if (valA > valB) return 1 * direction;
+        return 0;
+      });
+      sortDirection[key] = !sortDirection[key];
+      renderTable(sortedJobs);
+    }
+
+    renderTable(jobs);
+  </script>
+</body>
+</html>
